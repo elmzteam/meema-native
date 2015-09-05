@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		800A3C031B9A8E3600D63599 /* SerialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800A3C021B9A8E3600D63599 /* SerialController.swift */; };
+		80C5DE401B9A83540091A6C8 /* ORSSerial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80C5DE3F1B9A83490091A6C8 /* ORSSerial.framework */; };
 		80E340501B9A7F6600D98189 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3404F1B9A7F6600D98189 /* AppDelegate.swift */; };
 		80E340521B9A7F6600D98189 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E340511B9A7F6600D98189 /* Images.xcassets */; };
 		80E340551B9A7F6600D98189 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80E340531B9A7F6600D98189 /* MainMenu.xib */; };
@@ -16,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		80C5DE3E1B9A83490091A6C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 80C5DE3A1B9A83490091A6C8 /* ORSSerialPort.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9DCA89121A2BB106009285EB;
+			remoteInfo = ORSSerial;
+		};
 		80E3405B1B9A7F6600D98189 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 80E340421B9A7F6600D98189 /* Project object */;
@@ -26,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		800A3C021B9A8E3600D63599 /* SerialController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialController.swift; sourceTree = "<group>"; };
+		80C5DE3A1B9A83490091A6C8 /* ORSSerialPort.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ORSSerialPort.xcodeproj; path = "Frameworks/ORSSerialPort/Framework Project/ORSSerialPort.xcodeproj"; sourceTree = "<group>"; };
 		80E3404A1B9A7F6600D98189 /* Meema.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meema.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E3404E1B9A7F6600D98189 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80E3404F1B9A7F6600D98189 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80C5DE401B9A83540091A6C8 /* ORSSerial.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,9 +68,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		80C5DE3B1B9A83490091A6C8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				80C5DE3F1B9A83490091A6C8 /* ORSSerial.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		80E340411B9A7F6600D98189 = {
 			isa = PBXGroup;
 			children = (
+				80C5DE3A1B9A83490091A6C8 /* ORSSerialPort.xcodeproj */,
 				80E3404C1B9A7F6600D98189 /* Meema */,
 				80E3405D1B9A7F6600D98189 /* MeemaTests */,
 				80E3404B1B9A7F6600D98189 /* Products */,
@@ -83,6 +104,7 @@
 				80E3404D1B9A7F6600D98189 /* Supporting Files */,
 				80E3406A1B9A7F9D00D98189 /* MasterViewController.swift */,
 				80E3406B1B9A7F9D00D98189 /* MasterViewController.xib */,
+				800A3C021B9A8E3600D63599 /* SerialController.swift */,
 			);
 			path = Meema;
 			sourceTree = "<group>";
@@ -179,6 +201,12 @@
 			mainGroup = 80E340411B9A7F6600D98189;
 			productRefGroup = 80E3404B1B9A7F6600D98189 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 80C5DE3B1B9A83490091A6C8 /* Products */;
+					ProjectRef = 80C5DE3A1B9A83490091A6C8 /* ORSSerialPort.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				80E340491B9A7F6600D98189 /* Meema */,
@@ -186,6 +214,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		80C5DE3F1B9A83490091A6C8 /* ORSSerial.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ORSSerial.framework;
+			remoteRef = 80C5DE3E1B9A83490091A6C8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		80E340481B9A7F6600D98189 /* Resources */ = {
@@ -212,6 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				800A3C031B9A8E3600D63599 /* SerialController.swift in Sources */,
 				80E3406C1B9A7F9D00D98189 /* MasterViewController.swift in Sources */,
 				80E340501B9A7F6600D98189 /* AppDelegate.swift in Sources */,
 			);
@@ -404,6 +443,7 @@
 				80E340661B9A7F6600D98189 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		80E340671B9A7F6600D98189 /* Build configuration list for PBXNativeTarget "MeemaTests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +452,7 @@
 				80E340691B9A7F6600D98189 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

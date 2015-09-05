@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import ORSSerial
 
 class MasterViewController: NSViewController {
 
@@ -15,4 +16,11 @@ class MasterViewController: NSViewController {
         // Do view setup here.
     }
     
+}
+
+extension MasterViewController {
+	@IBAction func connect(sender: AnyObject) {
+		println("yo!")
+		serial.locateDevice()
+	}
 }

@@ -1,0 +1,3 @@
+[submodule "Meema/Frameworks/ORSSerialPort"]
+	path = Meema/Frameworks/ORSSerialPort
+	url = https://github.com/armadsen/ORSSerialPort.git
