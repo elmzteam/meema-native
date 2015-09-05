@@ -11,7 +11,7 @@ import ORSSerial
 
 class SerialController: NSObject, ORSSerialPortDelegate {
 	let manager = ORSSerialPortManager.sharedSerialPortManager()
-	let commands: [String: UInt8] = ["ping": 0x01, "isUnlocked": 0x02, "getUID": 0x03, "getActiveAccount": 0x04, "getAllAccounts": 0x05, "authenticate": 0x06, "getFragment": 0x07, "create": 0x10, "register": 0x11]
+	let commands: [String: UInt8] = ["ping": 0x01, "isUnlocked": 0x02, "getUID": 0x03, "getActiveAccount": 0x04, "getAllAccounts": 0x05, "login": 0x06, "getFragment": 0x07, "create": 0x10, "register": 0x11]
 	let responses: [String: UInt8] = ["getChannel": 0xFF, "isUnlocked": 0xFE, "response": 0xF2, "approved": 0xF1, "denied": 0xF0, "error": 0xEF]
 	var serialPort: ORSSerialPort? {
 		didSet {
@@ -22,7 +22,11 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 	}
 	var channel: UInt8 = 0x00
 	var command: String = ""
-	var accounts: [String] = []
+	var accounts: [String] = [] {
+		didSet {
+			masterViewController.accounts = self.accounts
+		}
+	}
 	var activeAccount: String = ""
 	
 	override init() {
@@ -33,14 +37,20 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		nc.addObserver(self, selector: "serialPortsWereDisconnected:", name: ORSSerialPortsWereDisconnectedNotification, object: nil)
 	}
 	
-	func locateDevice() {
+	func locateDevice(wait: Bool) {
 		var ports: [ORSSerialPort] = manager.availablePorts as! [ORSSerialPort]
 		for port in ports {
 			if port.name.rangeOfString("usbmodem") != nil {
 				port.baudRate = 9600
 				self.serialPort = port
 				println("Found Meema and set port")
-				connect()
+				if wait {
+					delay(5) {
+						self.connect()
+					}
+				} else {
+					self.connect()
+				}
 				break
 			}
 		}
@@ -54,7 +64,10 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		if let port = self.serialPort {
 			if (!port.open) {
 				port.open()
-				send(self.commands["ping"]!)
+				// Request a channel
+				delay(0.1) {
+					serial.send(serial.commands["ping"]!)
+				}
 			}
 		} else {
 			println("No port selected!")
@@ -77,15 +90,23 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 	}
 
 	func send(message: [UInt8]) {
-		self.serialPort?.sendData(NSData(bytes: [channel] + message, length: message.count))
+		println([channel] + message)
+		self.serialPort?.sendData(NSData(bytes: [channel] + message, length: message.count + 1))
 	}
 	
 	func getAccounts() {
-		send(self.commands["getAllAccounts"]!)
+		command = "getAllAccounts"
+		send(self.commands[command]!)
 	}
 	
 	func getActiveAccount() {
-		send(self.commands["getActiveAccount"]!)
+		command = "getActiveAccount"
+		send(self.commands[command]!)
+	}
+	
+	func login(username: String, password: String) {
+		command = "login"
+		send([self.commands[command]!, UInt8(count(username))] + [UInt8](username.utf8) + [UInt8(count(password))] + [UInt8](password.utf8))
 	}
 	
 	// MARK: - ORSSerialPortDelegate
@@ -110,42 +131,58 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 			// Received data on correct channel
 			switch array[1] {
 			case self.responses["getChannel"]!:
+				println("Channel is now \(array[2])")
 				self.channel = array[2]
+				getAccounts()
+
 			case self.responses["isUnlocked"]!:
 				break
+
 			case self.responses["response"]!:
 				let length = Int(array[2]) * sizeof(UInt8) + Int(array[3])
-				let response = NSString(bytes: Array(array[3..<array.count]) as [UInt8], length: length, encoding: NSUTF8StringEncoding) as? String
+				// Subtract 1 to remove delimiter from response
+				let response: NSString = NSString(bytes: Array(array[4..<array.count]) as [UInt8], length: length, encoding: NSUTF8StringEncoding)!
 				println(response)
 				switch command {
 				case "getAllAccounts":
-					self.accounts = NSJSONSerialization.JSONObjectWithData((response! as NSString).dataUsingEncoding(NSUTF8StringEncoding)!,
+					println("adsflkajsdf")
+					self.accounts = NSJSONSerialization.JSONObjectWithData((response).dataUsingEncoding(NSUTF8StringEncoding)!,
 						options: NSJSONReadingOptions.AllowFragments,
 						error: nil) as! [String]
+					println(self.accounts)
 				default:
-					break
+					println("Bad command")
 				}
-				break
+				command = ""
+
 			case self.responses["approved"]!:
 				switch command {
 				case "getActiveAccount":
 					break
 				case "register":
 					break
+				case "login":
+					println("logged in!!")
 				default:
 					break
 				}
+				command = ""
+
 			case self.responses["denied"]!:
 				switch command {
+				case "login":
+					println("did not log in :(")
 				default:
 					break
 				}
+				command = ""
+
 			case self.responses["error"]!:
 				println("Error oh no")
+
 			default:
 				println("Something dumb was received")
 			}
-			command = ""
 		}
 	}
 	
@@ -164,7 +201,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 			let connectedPorts = userInfo[ORSConnectedSerialPortsKey] as! [ORSSerialPort]
 			println("Ports were connected: \(connectedPorts)")
 			if self.serialPort == nil {
-				locateDevice()
+				locateDevice(true)
 			}
 		}
 	}
@@ -188,5 +225,14 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		notif.informativeText = message
 		notif.soundName = NSUserNotificationDefaultSoundName
 		NSUserNotificationCenter.defaultUserNotificationCenter().deliverNotification(notif)
+	}
+	
+	func delay(delay:Double, closure:()->()) {
+		dispatch_after(
+			dispatch_time(
+				DISPATCH_TIME_NOW,
+				Int64(delay * Double(NSEC_PER_SEC))
+			),
+			dispatch_get_main_queue(), closure)
 	}
 }

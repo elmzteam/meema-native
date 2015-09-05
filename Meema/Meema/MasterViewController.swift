@@ -11,7 +11,8 @@ import ORSSerial
 
 class MasterViewController: NSViewController {
 	@IBOutlet weak var users: NSPopUpButton!
-	var accounts: [String] = serial.accounts {
+	@IBOutlet weak var password: NSSecureTextField!
+	var accounts: [String] = [] {
 		didSet {
 			users.removeAllItems()
 			users.addItemsWithTitles(accounts)
@@ -21,12 +22,29 @@ class MasterViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-		serial.locateDevice()
+		serial.locateDevice(false)
+		users.removeAllItems()
     }
 }
 
 extension MasterViewController {
-	@IBAction func connect(sender: AnyObject) {
-		println("yo!")
+	@IBAction func login(sender: AnyObject) {
+		if let selected = users.selectedItem {
+			if password.stringValue.isEmpty {
+				let alert: NSAlert = NSAlert()
+				alert.addButtonWithTitle("Okay")
+				alert.messageText = "Empty password"
+				alert.informativeText = "Please enter a password for \(selected.title)"
+				alert.runModal()
+			} else {
+				serial.login(selected.title, password: password.stringValue)
+			}
+		} else {
+			let alert: NSAlert = NSAlert()
+			alert.addButtonWithTitle("Okay")
+			alert.messageText = "No user selected!"
+			alert.informativeText = "Please select a user"
+			alert.runModal()
+		}
 	}
 }

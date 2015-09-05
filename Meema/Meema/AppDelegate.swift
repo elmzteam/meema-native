@@ -9,9 +9,9 @@
 import Cocoa
 
 var serial: SerialController! = SerialController()
+var masterViewController: MasterViewController!
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
-	var masterViewController: MasterViewController!
 	@IBOutlet weak var window: NSWindow!
 
 
@@ -21,6 +21,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		
 		window.contentView.addSubview(masterViewController.view)
 		masterViewController.view.frame = (window.contentView as! NSView).bounds
+		self.window.styleMask = self.window.styleMask | NSFullSizeContentViewWindowMask;
+		self.window.titlebarAppearsTransparent = true
 	}
 
 	func applicationWillTerminate(aNotification: NSNotification) {
