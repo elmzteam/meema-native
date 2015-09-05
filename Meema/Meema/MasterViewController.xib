@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="waZ-45-tg7">
-                    <rect key="frame" x="199" y="119" width="82" height="32"/>
+                    <rect key="frame" x="384" y="13" width="82" height="32"/>
                     <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IUF-fO-zsM">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -28,5 +28,6 @@
                 </button>
             </subviews>
         </customView>
+        <userDefaultsController representsSharedInstance="YES" id="x6m-aE-p8q"/>
     </objects>
 </document>
