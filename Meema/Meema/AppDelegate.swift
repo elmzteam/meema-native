@@ -10,19 +10,30 @@ import Cocoa
 
 var serial: SerialController! = SerialController()
 var masterViewController: MasterViewController!
+var loadingViewController: LoadingViewController!
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
 	@IBOutlet weak var window: NSWindow!
 	lazy var mainWindow = MainWindowController(windowNibName: "MainWindowController")
 
 	func applicationDidFinishLaunching(aNotification: NSNotification) {
+		// Initialize notifications
 		NSUserNotificationCenter.defaultUserNotificationCenter().delegate = self
+
+		// Create login screen
 		masterViewController = MasterViewController(nibName: "MasterViewController", bundle: nil)
+		loadingViewController = LoadingViewController(nibName: "LoadingViewController", bundle: nil)
 		
-		window.contentView.addSubview(masterViewController!.view)
-		masterViewController!.view.frame = (window.contentView as! NSView).bounds
+		// Set layout
+		window.contentView.addSubview(loadingViewController.view)
+		loadingViewController.view.frame = (window.contentView as! NSView).bounds
+
+		// Setup window
 		self.window.styleMask = self.window.styleMask | NSFullSizeContentViewWindowMask;
 		self.window.titlebarAppearsTransparent = true
+
+		// Search for serial port
+		serial.locateDevice(false)
 	}
 
 	func applicationWillTerminate(aNotification: NSNotification) {
@@ -42,9 +53,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		return true
 	}
 	
+	func showLogin() {
+		loadingViewController.stop()
+		window.contentView.addSubview(masterViewController.view)
+		masterViewController.view.frame = (window.contentView as! NSView).bounds
+	}
+
 	func switchView() {
 //		let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
-//		window.contentView.removeAllItems()
 //		window.contentView.addSubview(mainViewController!.view)
 //		mainViewController!.view.frame = (window.contentView as! NSView).bounds
 		self.mainWindow.showWindow(self)

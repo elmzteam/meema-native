@@ -20,6 +20,8 @@
 		80E4425D1B9B68F400F5E435 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80E4425B1B9B68F400F5E435 /* MainViewController.xib */; };
 		80E442601B9B6DFF00F5E435 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4425E1B9B6DFF00F5E435 /* MainWindowController.swift */; };
 		80E442611B9B6DFF00F5E435 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80E4425F1B9B6DFF00F5E435 /* MainWindowController.xib */; };
+		80FC27601B9B8BA00012D854 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FC275E1B9B8BA00012D854 /* LoadingViewController.swift */; };
+		80FC27611B9B8BA00012D854 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80FC275F1B9B8BA00012D854 /* LoadingViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		80E4425B1B9B68F400F5E435 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		80E4425E1B9B6DFF00F5E435 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		80E4425F1B9B6DFF00F5E435 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
+		80FC275E1B9B8BA00012D854 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		80FC275F1B9B8BA00012D854 /* LoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,8 @@
 				80E4425B1B9B68F400F5E435 /* MainViewController.xib */,
 				80E4425E1B9B6DFF00F5E435 /* MainWindowController.swift */,
 				80E4425F1B9B6DFF00F5E435 /* MainWindowController.xib */,
+				80FC275E1B9B8BA00012D854 /* LoadingViewController.swift */,
+				80FC275F1B9B8BA00012D854 /* LoadingViewController.xib */,
 			);
 			path = Meema;
 			sourceTree = "<group>";
@@ -245,6 +251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80FC27611B9B8BA00012D854 /* LoadingViewController.xib in Resources */,
 				80E340521B9A7F6600D98189 /* Images.xcassets in Resources */,
 				80E442591B9B624E00F5E435 /* Meema apple.png in Resources */,
 				80E4425D1B9B68F400F5E435 /* MainViewController.xib in Resources */,
@@ -273,6 +280,7 @@
 				80E340501B9A7F6600D98189 /* AppDelegate.swift in Sources */,
 				80E4425C1B9B68F400F5E435 /* MainViewController.swift in Sources */,
 				80E442601B9B6DFF00F5E435 /* MainWindowController.swift in Sources */,
+				80FC27601B9B8BA00012D854 /* LoadingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

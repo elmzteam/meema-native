@@ -44,8 +44,10 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				port.baudRate = 9600
 				self.serialPort = port
 				println("Found Meema and set port")
+				loadingViewController.displayMessage("Communicating with Meema...")
 				if wait {
-					delay(5) {
+					delay(8) {
+						// Wait for kernel to load
 						self.connect()
 					}
 				} else {
@@ -56,7 +58,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		}
 		if self.serialPort == nil {
 			println("No Meema found")
-			postNotification("Meema not found!", message: "Please connect your Meema and try again.")
+			postNotification("Meema not found!", message: "Please ensure your Meema connected and warmed up.")
 		}
 	}
 	
@@ -113,12 +115,12 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 	
 	func serialPortWasOpened(serialPort: ORSSerialPort) {
 		println("Port opened")
-		postNotification("Connected to Meemo", message: "Hooray!")
+		postNotification("Connected to Meema", message: "Meema is ready for you!")
 	}
 	
 	func serialPortWasClosed(serialPort: ORSSerialPort) {
 		println("Port closed")
-		postNotification("Meemo disconnected", message: "Hooray!")
+		postNotification("Meema disconnected", message: "Sad to see you go!")
 	}
 	
 	// Receive data
@@ -133,6 +135,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 			case self.responses["getChannel"]!:
 				println("Channel is now \(array[2])")
 				self.channel = array[2]
+				loadingViewController.displayMessage("Receiving data...")
 				getAccounts()
 
 			case self.responses["isUnlocked"]!:
@@ -141,6 +144,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				case "login":
 					if unlocked {
 						println("logged in!")
+						masterViewController.switchView()
 					} else {
 						println("not logged in.")
 						let alert: NSAlert = NSAlert()
@@ -160,7 +164,9 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				println(response)
 				switch command {
 				case "getAllAccounts":
-					println("adsflkajsdf")
+					// Switch display to login screen
+					(NSApplication.sharedApplication().delegate as! AppDelegate).showLogin()
+					// Grab accounts from JSON data
 					self.accounts = NSJSONSerialization.JSONObjectWithData((response).dataUsingEncoding(NSUTF8StringEncoding)!,
 						options: NSJSONReadingOptions.AllowFragments,
 						error: nil) as! [String]
@@ -224,7 +230,6 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 			for port in disconnectedPorts {
 				if port == self.serialPort {
 					self.serialPort = nil
-					postNotification("Meemo disconnected!", message: "Check connection")
 				}
 			}
 		}

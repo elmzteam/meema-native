@@ -21,15 +21,8 @@ class MasterViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
-		serial.locateDevice(false)
 		users.removeAllItems()
     }
-	
-	override func viewDidAppear() {
-		super.viewDidAppear()
-		switchView()
-	}
 	
 	func switchView() {
 		let ad = NSApplication.sharedApplication().delegate as! AppDelegate
@@ -56,5 +49,13 @@ extension MasterViewController {
 			alert.informativeText = "Please select a user"
 			alert.runModal()
 		}
+	}
+}
+
+extension MasterViewController {
+	func createAccount() {
+		let alert: NSAlert = NSAlert()
+		alert.messageText = "Create new account"
+		
 	}
 }
