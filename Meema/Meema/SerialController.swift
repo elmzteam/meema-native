@@ -136,7 +136,22 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				getAccounts()
 
 			case self.responses["isUnlocked"]!:
-				break
+				let unlocked: Bool = array[2] == 0x01
+				switch command {
+				case "login":
+					if unlocked {
+						println("logged in!")
+					} else {
+						println("not logged in.")
+						let alert: NSAlert = NSAlert()
+						alert.addButtonWithTitle("Try again")
+						alert.messageText = "Invalid credentials"
+						alert.informativeText = "Wrong password for selected user"
+						alert.runModal()
+					}
+				default:
+					break
+				}
 
 			case self.responses["response"]!:
 				let length = Int(array[2]) * sizeof(UInt8) + Int(array[3])
@@ -161,8 +176,6 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 					break
 				case "register":
 					break
-				case "login":
-					println("logged in!!")
 				default:
 					break
 				}
@@ -170,8 +183,6 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 
 			case self.responses["denied"]!:
 				switch command {
-				case "login":
-					println("did not log in :(")
 				default:
 					break
 				}

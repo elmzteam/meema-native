@@ -13,14 +13,14 @@ var masterViewController: MasterViewController!
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
 	@IBOutlet weak var window: NSWindow!
-
+	lazy var mainWindow = MainWindowController(windowNibName: "MainWindowController")
 
 	func applicationDidFinishLaunching(aNotification: NSNotification) {
 		NSUserNotificationCenter.defaultUserNotificationCenter().delegate = self
 		masterViewController = MasterViewController(nibName: "MasterViewController", bundle: nil)
 		
-		window.contentView.addSubview(masterViewController.view)
-		masterViewController.view.frame = (window.contentView as! NSView).bounds
+		window.contentView.addSubview(masterViewController!.view)
+		masterViewController!.view.frame = (window.contentView as! NSView).bounds
 		self.window.styleMask = self.window.styleMask | NSFullSizeContentViewWindowMask;
 		self.window.titlebarAppearsTransparent = true
 	}
@@ -40,6 +40,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 	
 	func userNotificationCenter(center: NSUserNotificationCenter, shouldPresentNotification notification: NSUserNotification) -> Bool {
 		return true
+	}
+	
+	func switchView() {
+//		let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
+//		window.contentView.removeAllItems()
+//		window.contentView.addSubview(mainViewController!.view)
+//		mainViewController!.view.frame = (window.contentView as! NSView).bounds
+		self.mainWindow.showWindow(self)
+		self.mainWindow.window!.makeKeyAndOrderFront(nil)
 	}
 }
 

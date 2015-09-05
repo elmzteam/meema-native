@@ -15,6 +15,11 @@
 		80E340611B9A7F6600D98189 /* MeemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E340601B9A7F6600D98189 /* MeemaTests.swift */; };
 		80E3406C1B9A7F9D00D98189 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3406A1B9A7F9D00D98189 /* MasterViewController.swift */; };
 		80E3406D1B9A7F9D00D98189 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80E3406B1B9A7F9D00D98189 /* MasterViewController.xib */; };
+		80E442591B9B624E00F5E435 /* Meema apple.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E442581B9B624E00F5E435 /* Meema apple.png */; };
+		80E4425C1B9B68F400F5E435 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4425A1B9B68F400F5E435 /* MainViewController.swift */; };
+		80E4425D1B9B68F400F5E435 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80E4425B1B9B68F400F5E435 /* MainViewController.xib */; };
+		80E442601B9B6DFF00F5E435 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4425E1B9B6DFF00F5E435 /* MainWindowController.swift */; };
+		80E442611B9B6DFF00F5E435 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80E4425F1B9B6DFF00F5E435 /* MainWindowController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +52,11 @@
 		80E340601B9A7F6600D98189 /* MeemaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeemaTests.swift; sourceTree = "<group>"; };
 		80E3406A1B9A7F9D00D98189 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		80E3406B1B9A7F9D00D98189 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
+		80E442581B9B624E00F5E435 /* Meema apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Meema apple.png"; sourceTree = "<group>"; };
+		80E4425A1B9B68F400F5E435 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		80E4425B1B9B68F400F5E435 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		80E4425E1B9B6DFF00F5E435 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		80E4425F1B9B6DFF00F5E435 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +108,7 @@
 		80E3404C1B9A7F6600D98189 /* Meema */ = {
 			isa = PBXGroup;
 			children = (
+				80E442581B9B624E00F5E435 /* Meema apple.png */,
 				80E3404F1B9A7F6600D98189 /* AppDelegate.swift */,
 				80E340511B9A7F6600D98189 /* Images.xcassets */,
 				80E340531B9A7F6600D98189 /* MainMenu.xib */,
@@ -105,6 +116,10 @@
 				80E3406A1B9A7F9D00D98189 /* MasterViewController.swift */,
 				80E3406B1B9A7F9D00D98189 /* MasterViewController.xib */,
 				800A3C021B9A8E3600D63599 /* SerialController.swift */,
+				80E4425A1B9B68F400F5E435 /* MainViewController.swift */,
+				80E4425B1B9B68F400F5E435 /* MainViewController.xib */,
+				80E4425E1B9B6DFF00F5E435 /* MainWindowController.swift */,
+				80E4425F1B9B6DFF00F5E435 /* MainWindowController.xib */,
 			);
 			path = Meema;
 			sourceTree = "<group>";
@@ -231,7 +246,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				80E340521B9A7F6600D98189 /* Images.xcassets in Resources */,
+				80E442591B9B624E00F5E435 /* Meema apple.png in Resources */,
+				80E4425D1B9B68F400F5E435 /* MainViewController.xib in Resources */,
 				80E340551B9A7F6600D98189 /* MainMenu.xib in Resources */,
+				80E442611B9B6DFF00F5E435 /* MainWindowController.xib in Resources */,
 				80E3406D1B9A7F9D00D98189 /* MasterViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,6 +271,8 @@
 				800A3C031B9A8E3600D63599 /* SerialController.swift in Sources */,
 				80E3406C1B9A7F9D00D98189 /* MasterViewController.swift in Sources */,
 				80E340501B9A7F6600D98189 /* AppDelegate.swift in Sources */,
+				80E4425C1B9B68F400F5E435 /* MainViewController.swift in Sources */,
+				80E442601B9B6DFF00F5E435 /* MainWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

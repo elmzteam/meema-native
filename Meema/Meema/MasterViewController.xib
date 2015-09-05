@@ -20,18 +20,8 @@
                 <visualEffectView appearanceType="vibrantLight" ambiguous="YES" misplaced="YES" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="Gc6-K4-53l">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                     <subviews>
-                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NT3-M0-waz">
-                            <rect key="frame" x="308" y="83" width="82" height="32"/>
-                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="icx-HG-m6k">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="login:" target="-2" id="Boj-ok-dIe"/>
-                            </connections>
-                        </button>
                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xeA-Ls-8rE">
-                            <rect key="frame" x="122" y="233" width="265" height="26"/>
+                            <rect key="frame" x="124" y="123" width="265" height="26"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ouo-dU-RLX" id="odl-sf-3wO">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
@@ -44,26 +34,28 @@
                                 </menu>
                             </popUpButtonCell>
                         </popUpButton>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FNk-s4-DX8">
-                            <rect key="frame" x="85" y="238" width="33" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="User" id="Hir-BW-WN7">
+                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NT3-M0-waz">
+                            <rect key="frame" x="317" y="42" width="75" height="32"/>
+                            <buttonCell key="cell" type="push" title="Login" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="icx-HG-m6k">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
+                            </buttonCell>
+                            <connections>
+                                <action selector="login:" target="-2" id="Boj-ok-dIe"/>
+                            </connections>
+                        </button>
                     </subviews>
                 </visualEffectView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rVI-rL-5Rw">
-                    <rect key="frame" x="53" y="172" width="65" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Password" id="Nw0-Lc-GMh">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FNk-s4-DX8">
+                    <rect key="frame" x="87" y="128" width="33" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="User" id="Hir-BW-WN7">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LQt-5o-EeQ">
-                    <rect key="frame" x="124" y="169" width="260" height="22"/>
+                    <rect key="frame" x="126" y="90" width="260" height="22"/>
                     <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="mf0-bF-DYq">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -73,6 +65,26 @@
                         </allowedInputSourceLocales>
                     </secureTextFieldCell>
                 </secureTextField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rVI-rL-5Rw">
+                    <rect key="frame" x="55" y="93" width="65" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Password" id="Nw0-Lc-GMh">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Mn-LM-T5w">
+                    <rect key="frame" x="190" y="212" width="100" height="100"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="Meema apple" id="uVC-OM-dpy"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cWI-US-gHo">
+                    <rect key="frame" x="193" y="171" width="94" height="33"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Meema" id="CaZ-eh-rn3">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="Gc6-K4-53l" secondAttribute="centerY" id="dom-R6-9Kq"/>
@@ -81,4 +93,7 @@
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="x6m-aE-p8q"/>
     </objects>
+    <resources>
+        <image name="Meema apple" width="1024" height="1024"/>
+    </resources>
 </document>

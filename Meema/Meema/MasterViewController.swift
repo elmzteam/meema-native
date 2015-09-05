@@ -25,6 +25,16 @@ class MasterViewController: NSViewController {
 		serial.locateDevice(false)
 		users.removeAllItems()
     }
+	
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		switchView()
+	}
+	
+	func switchView() {
+		let ad = NSApplication.sharedApplication().delegate as! AppDelegate
+		ad.switchView()
+	}
 }
 
 extension MasterViewController {
