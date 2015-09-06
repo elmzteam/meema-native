@@ -7,12 +7,12 @@
 //
 
 import Cocoa
-var mainViewController: MainViewController!
+var mainViewController: mvc!
 class MainWindowController: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
-		mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)!
+		mainViewController = mvc(nibName: "mvc", bundle: nil)!
 		self.window!.contentView.addSubview(mainViewController.view)
 		mainViewController.view.frame = (self.window!.contentView as! NSView).bounds
 		self.window!.styleMask = self.window!.styleMask | NSFullSizeContentViewWindowMask;

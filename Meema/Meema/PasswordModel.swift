@@ -9,8 +9,10 @@
 import Foundation
 
 class PasswordModel: NSObject {
-	var name: String = ""
-	init(name: String) {
-		self.name = name
+	var url: String?
+	var children: [PasswordModel]?
+	init(url: String?, children: [PasswordModel]?) {
+		self.url = url
+		self.children = children
 	}
 }
