@@ -22,12 +22,15 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 	}
 	var channel: UInt8 = 0x00
 	var command: String = ""
+	var lastUsername: String = ""
 	var accounts: [String] = [] {
 		didSet {
 			masterViewController.accounts = self.accounts
 		}
 	}
+	var UID: String = ""
 	var activeAccount: String = ""
+	var recent: String = ""
 	
 	override init() {
 		super.init()
@@ -45,7 +48,11 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				self.serialPort = port
 				println("Found Meema and set port")
 				if wait {
+					println("Waiting 8 secs for Edison bootup")
 					loadingViewController.displayMessage("Waiting for Meema...")
+					delay(5) {
+						loadingViewController.displayMessage("Almost ready...")
+					}
 					delay(8) {
 						// Wait for kernel to load
 						self.connect()
@@ -110,6 +117,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 	}
 	
 	func getFragment(model: PasswordModel) {
+		recent = model.url
 		command = "getFragment"
 		send([self.commands[command]!, UInt8(count(model.url))] + [UInt8](model.url.utf8))
 	}
@@ -120,6 +128,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 	}
 	
 	func login(username: String, password: String) {
+		lastUsername = username
 		command = "login"
 		send([self.commands[command]!, UInt8(count(username))] + [UInt8](username.utf8) + [UInt8(count(password))] + [UInt8](password.utf8))
 	}
@@ -135,6 +144,11 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		// TODO: split password to fragments and only send fragment over
 		send([self.commands[command]!, UInt8(count(name))] + [UInt8](name.utf8) + [UInt8(count(password))] + [UInt8](password.utf8))
 		mainViewController.dataController.addObject(PasswordModel(url: name, children: nil))
+	}
+	
+	func getUID() {
+		command = "getUID"
+		send(self.commands[command]!)
 	}
 	
 	// MARK: - ORSSerialPortDelegate
@@ -182,6 +196,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				default:
 					println("\(command) received a \(unlocked) from isUnlocked")
 				}
+				command = ""
 
 			case self.responses["response"]!:
 				let length = Int(array[2]) * sizeof(UInt8) + Int(array[3])
@@ -197,6 +212,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 						options: NSJSONReadingOptions.AllowFragments,
 						error: nil) as! [String]
 					println("Accounts set")
+					getUID()
 				case "getFragments":
 					// Grab accounts from JSON data
 					let list = NSJSONSerialization.JSONObjectWithData((response).dataUsingEncoding(NSUTF8StringEncoding)!,
@@ -210,12 +226,24 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				case "getFragment":
 					// TODO: send var response to server
 					// get result and call
-					let result = ""
-					mainViewController.saveToClipboard(result)
+					let url = NSURL(string: "www.meema.co/\(UID)/\(lastUsername)/\(hash(recent as String))")
+					let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, resp, error) in
+						let json = NSJSONSerialization.JSONObjectWithData(data,
+							options: NSJSONReadingOptions.AllowFragments,
+						error: nil) as! [String: String]
+//						let result = json["password"]! ^ response as String
+						mainViewController.saveToClipboard("Password")
+					}
+					
+				case "getUID":
+					UID = response as String
+					command = ""
 				default:
 					println("\(command) received a response, but it wasn't handled!")
 				}
-				command = ""
+				if command != "getUID" {
+					command = ""
+				}
 
 			case self.responses["approved"]!:
 				switch command {
@@ -284,6 +312,28 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		notif.informativeText = message
 		notif.soundName = NSUserNotificationDefaultSoundName
 		NSUserNotificationCenter.defaultUserNotificationCenter().deliverNotification(notif)
+	}
+	
+//	var hashCode = function(str) {
+//		var hash = 0, i, chr, len;
+//		if (str.length == 0) return hash;
+//		for (i = 0, len = str.length; i < len; i++) {
+//			chr   = str.charCodeAt(i);
+//			hash  = ((hash << 5) - hash) + chr;
+//			hash |= 0; // Convert to 32bit integer
+//		}
+//		return hash;
+//	};
+	func hash(input: String) -> Int {
+		var result: Int = 0
+		if count(input) == 0 {
+			return result
+		}
+		for i in 0..<count(input) {
+			result = (result << 5 - result) + String(input[advance(input.startIndex, i)]).toInt()!
+			result |= 0
+		}
+		return result
 	}
 	
 	func delay(delay:Double, closure:()->()) {
