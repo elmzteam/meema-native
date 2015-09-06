@@ -44,8 +44,8 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				port.baudRate = 9600
 				self.serialPort = port
 				println("Found Meema and set port")
-				loadingViewController.displayMessage("Communicating with Meema...")
 				if wait {
+					loadingViewController.displayMessage("Waiting for Meema...")
 					delay(8) {
 						// Wait for kernel to load
 						self.connect()
@@ -66,6 +66,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		if let port = self.serialPort {
 			if (!port.open) {
 				port.open()
+				loadingViewController.displayMessage("Communicating with Meema...")
 				// Request a channel
 				delay(0.1) {
 					serial.send(serial.commands["ping"]!)
@@ -92,7 +93,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 	}
 
 	func send(message: [UInt8]) {
-		println([channel] + message)
+		println("Sending message: \([channel] + message)")
 		self.serialPort?.sendData(NSData(bytes: [channel] + message, length: message.count + 1))
 	}
 
@@ -108,6 +109,11 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		send(self.commands[command]!)
 	}
 	
+	func getFragment(model: PasswordModel) {
+		command = "getFragment"
+		send([self.commands[command]!, UInt8(count(model.url))] + [UInt8](model.url.utf8))
+	}
+	
 	func getFragments() {
 		command = "getFragments"
 		send(self.commands[command]!)
@@ -118,9 +124,17 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		send([self.commands[command]!, UInt8(count(username))] + [UInt8](username.utf8) + [UInt8(count(password))] + [UInt8](password.utf8))
 	}
 	
-	func register(username: String, password: String) {
-		command = "register"
+	func createAccount(username: String, password: String) {
+		command = "create"
 		send([self.commands[command]!, UInt8(count(username))] + [UInt8](username.utf8) + [UInt8(count(password))] + [UInt8](password.utf8))
+
+	}
+	
+	func register(name: String, password: String) {
+		command = "register"
+		// TODO: split password to fragments and only send fragment over
+		send([self.commands[command]!, UInt8(count(name))] + [UInt8](name.utf8) + [UInt8(count(password))] + [UInt8](password.utf8))
+		mainViewController.dataController.addObject(PasswordModel(url: name, children: nil))
 	}
 	
 	// MARK: - ORSSerialPortDelegate
@@ -166,14 +180,14 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 						alert.runModal()
 					}
 				default:
-					break
+					println("\(command) received a \(unlocked) from isUnlocked")
 				}
 
 			case self.responses["response"]!:
 				let length = Int(array[2]) * sizeof(UInt8) + Int(array[3])
 				// Subtract 1 to remove delimiter from response
 				let response: NSString = NSString(bytes: Array(array[4..<array.count]) as [UInt8], length: length, encoding: NSUTF8StringEncoding)!
-				println(response)
+				println("Meema response: \(response)")
 				switch command {
 				case "getAllAccounts":
 					// Switch display to login screen
@@ -182,18 +196,24 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 					self.accounts = NSJSONSerialization.JSONObjectWithData((response).dataUsingEncoding(NSUTF8StringEncoding)!,
 						options: NSJSONReadingOptions.AllowFragments,
 						error: nil) as! [String]
-					println(self.accounts)
+					println("Accounts set")
 				case "getFragments":
 					// Grab accounts from JSON data
 					let list = NSJSONSerialization.JSONObjectWithData((response).dataUsingEncoding(NSUTF8StringEncoding)!,
 						options: NSJSONReadingOptions.AllowFragments,
 					error: nil) as! [String]
-//					mainViewController.data = []
-//					for e in list {
-//						mainViewController.data.addObject(PasswordModel(name: e))
-//					}
+					mainViewController.dataController.content = nil
+					// Insert objects into sidebar
+					for e in list {
+						mainViewController.dataController.addObject(PasswordModel(url: e, children: nil))
+					}
+				case "getFragment":
+					// TODO: send var response to server
+					// get result and call
+					let result = ""
+					mainViewController.saveToClipboard(result)
 				default:
-					println("Bad command")
+					println("\(command) received a response, but it wasn't handled!")
 				}
 				command = ""
 
@@ -201,17 +221,19 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				switch command {
 				case "getActiveAccount":
 					break
-				case "register":
+				case "create":
 					postNotification("Account created", message: "You may now log in")
+				case "register":
+					postNotification("Credentials saved", message: "Your credenitials have been stored onto your Meema")
 				default:
-					break
+					println("\(command) was approved")
 				}
 				command = ""
 
 			case self.responses["denied"]!:
 				switch command {
 				default:
-					break
+					println("\(command) was denied")
 				}
 				command = ""
 

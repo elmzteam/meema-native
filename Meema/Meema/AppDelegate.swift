@@ -34,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
 		// Search for serial port
 		serial.locateDevice(false)
-		switchView()
+//		switchView()
 	}
 
 	func applicationWillTerminate(aNotification: NSNotification) {
