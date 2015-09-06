@@ -7,14 +7,14 @@
 //
 
 import Cocoa
-
+var mainViewController: MainViewController!
 class MainWindowController: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
-		let mainVC: MainViewController = MainViewController(nibName: "MainViewController", bundle: nil)!
-		self.window!.contentView.addSubview(mainVC.view)
-		mainVC.view.frame = (self.window!.contentView as! NSView).bounds
+		mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)!
+		self.window!.contentView.addSubview(mainViewController.view)
+		mainViewController.view.frame = (self.window!.contentView as! NSView).bounds
 		self.window!.styleMask = self.window!.styleMask | NSFullSizeContentViewWindowMask;
 		self.window!.titlebarAppearsTransparent = true
 		self.window!.titleVisibility = .Hidden

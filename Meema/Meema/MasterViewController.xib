@@ -39,6 +39,9 @@
                             <buttonCell key="cell" type="push" title="Login" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="icx-HG-m6k">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
+                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                             </buttonCell>
                             <connections>
                                 <action selector="login:" target="-2" id="Boj-ok-dIe"/>
@@ -49,7 +52,13 @@
                             <buttonCell key="cell" type="push" title="New Account" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Uzg-d6-6cc">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
+                                <string key="keyEquivalent" base64-UTF8="YES">
+IA
+</string>
                             </buttonCell>
+                            <connections>
+                                <action selector="createAccount:" target="-2" id="gnk-2s-UUi"/>
+                            </connections>
                         </button>
                     </subviews>
                 </visualEffectView>

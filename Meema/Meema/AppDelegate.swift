@@ -34,6 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
 		// Search for serial port
 		serial.locateDevice(false)
+		switchView()
 	}
 
 	func applicationWillTerminate(aNotification: NSNotification) {
@@ -63,6 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 //		let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
 //		window.contentView.addSubview(mainViewController!.view)
 //		mainViewController!.view.frame = (window.contentView as! NSView).bounds
+		self.window.close()
 		self.mainWindow.showWindow(self)
 		self.mainWindow.window!.makeKeyAndOrderFront(nil)
 	}

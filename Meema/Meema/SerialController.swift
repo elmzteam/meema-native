@@ -11,7 +11,7 @@ import ORSSerial
 
 class SerialController: NSObject, ORSSerialPortDelegate {
 	let manager = ORSSerialPortManager.sharedSerialPortManager()
-	let commands: [String: UInt8] = ["ping": 0x01, "isUnlocked": 0x02, "getUID": 0x03, "getActiveAccount": 0x04, "getAllAccounts": 0x05, "login": 0x06, "getFragment": 0x07, "create": 0x10, "register": 0x11]
+	let commands: [String: UInt8] = ["ping": 0x01, "isUnlocked": 0x02, "getUID": 0x03, "getActiveAccount": 0x04, "getAllAccounts": 0x05, "login": 0x06, "getFragment": 0x07, "getFragments": 0x08, "create": 0x10, "register": 0x11]
 	let responses: [String: UInt8] = ["getChannel": 0xFF, "isUnlocked": 0xFE, "response": 0xF2, "approved": 0xF1, "denied": 0xF0, "error": 0xEF]
 	var serialPort: ORSSerialPort? {
 		didSet {
@@ -95,6 +95,8 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		println([channel] + message)
 		self.serialPort?.sendData(NSData(bytes: [channel] + message, length: message.count + 1))
 	}
+
+	// ===========Tasks=============
 	
 	func getAccounts() {
 		command = "getAllAccounts"
@@ -106,8 +108,18 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 		send(self.commands[command]!)
 	}
 	
+	func getFragments() {
+		command = "getFragments"
+		send(self.commands[command]!)
+	}
+	
 	func login(username: String, password: String) {
 		command = "login"
+		send([self.commands[command]!, UInt8(count(username))] + [UInt8](username.utf8) + [UInt8(count(password))] + [UInt8](password.utf8))
+	}
+	
+	func register(username: String, password: String) {
+		command = "register"
 		send([self.commands[command]!, UInt8(count(username))] + [UInt8](username.utf8) + [UInt8(count(password))] + [UInt8](password.utf8))
 	}
 	
@@ -171,6 +183,15 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 						options: NSJSONReadingOptions.AllowFragments,
 						error: nil) as! [String]
 					println(self.accounts)
+				case "getFragments":
+					// Grab accounts from JSON data
+					let list = NSJSONSerialization.JSONObjectWithData((response).dataUsingEncoding(NSUTF8StringEncoding)!,
+						options: NSJSONReadingOptions.AllowFragments,
+					error: nil) as! [String]
+//					mainViewController.data = []
+//					for e in list {
+//						mainViewController.data.addObject(PasswordModel(name: e))
+//					}
 				default:
 					println("Bad command")
 				}
@@ -181,7 +202,7 @@ class SerialController: NSObject, ORSSerialPortDelegate {
 				case "getActiveAccount":
 					break
 				case "register":
-					break
+					postNotification("Account created", message: "You may now log in")
 				default:
 					break
 				}

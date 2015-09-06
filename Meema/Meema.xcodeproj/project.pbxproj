@@ -22,6 +22,7 @@
 		80E442611B9B6DFF00F5E435 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80E4425F1B9B6DFF00F5E435 /* MainWindowController.xib */; };
 		80FC27601B9B8BA00012D854 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FC275E1B9B8BA00012D854 /* LoadingViewController.swift */; };
 		80FC27611B9B8BA00012D854 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80FC275F1B9B8BA00012D854 /* LoadingViewController.xib */; };
+		80FC27641B9B951E0012D854 /* PasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FC27631B9B951E0012D854 /* PasswordModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		80E4425F1B9B6DFF00F5E435 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
 		80FC275E1B9B8BA00012D854 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		80FC275F1B9B8BA00012D854 /* LoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
+		80FC27631B9B951E0012D854 /* PasswordModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				80E4425F1B9B6DFF00F5E435 /* MainWindowController.xib */,
 				80FC275E1B9B8BA00012D854 /* LoadingViewController.swift */,
 				80FC275F1B9B8BA00012D854 /* LoadingViewController.xib */,
+				80FC27631B9B951E0012D854 /* PasswordModel.swift */,
 			);
 			path = Meema;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				800A3C031B9A8E3600D63599 /* SerialController.swift in Sources */,
 				80E3406C1B9A7F9D00D98189 /* MasterViewController.swift in Sources */,
 				80E340501B9A7F6600D98189 /* AppDelegate.swift in Sources */,
+				80FC27641B9B951E0012D854 /* PasswordModel.swift in Sources */,
 				80E4425C1B9B68F400F5E435 /* MainViewController.swift in Sources */,
 				80E442601B9B6DFF00F5E435 /* MainWindowController.swift in Sources */,
 				80FC27601B9B8BA00012D854 /* LoadingViewController.swift in Sources */,
